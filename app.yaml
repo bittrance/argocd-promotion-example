@@ -1,0 +1,63 @@
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: ClusterScmProvider
+metadata:
+  name: bittrance-gitops-promoter
+spec:
+  github:
+    appID: 1460251
+    installationID: 72971609
+  secretRef:
+    name: bittrance-gitops-promoter
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: GitRepository
+metadata:
+  name: argocd-promotion-example
+spec:
+  github:
+    owner: bittrance
+    name: argocd-promotion-example
+  scmProviderRef:
+    kind: ClusterScmProvider
+    name: bittrance-gitops-promoter
+---
+apiVersion: promoter.argoproj.io/v1alpha1
+kind: PromotionStrategy
+metadata:
+  name: hello-rest
+spec:
+  environments:
+    - autoMerge: true
+      branch: environment/test
+    - autoMerge: false
+      branch: environment/prod
+  gitRepositoryRef:
+    name: argocd-promotion-example
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-rest-test
+spec:
+  project: default #team-awesome
+  source:
+    repoURL: https://github.com/bittrance/argocd-promotion-example
+    path: helm
+    chart: hello-rest
+  sourceHydrator:
+    drySource:
+      repoURL: https://github.com/bittrance/argocd-promotion-example
+      targetRevision: main
+      path: helm
+    hydrateTo:
+      targetBranch: environment/test-next
+    syncSource:
+      targetBranch: environment/test
+      path: rendered
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello-rest-test
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
