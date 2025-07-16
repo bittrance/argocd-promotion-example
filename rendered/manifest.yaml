@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    argocd.argoproj.io/tracking-id: hello-rest-test:/Service:/hello-rest
+    argocd.argoproj.io/tracking-id: team-awesome_hello-rest-test:/Service:/hello-rest
   name: hello-rest
 spec:
   ports:
@@ -17,12 +17,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    argocd.argoproj.io/tracking-id: hello-rest-test:apps/Deployment:/hello-rest
+    argocd.argoproj.io/tracking-id: team-awesome_hello-rest-test:apps/Deployment:/hello-rest
   labels:
     app.kubernetes.io/name: hello-rest
   name: hello-rest
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: hello-rest
