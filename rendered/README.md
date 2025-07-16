@@ -7,6 +7,6 @@ To hydrate the manifests in this repository, run the following commands:
 
 git clone https://github.com/bittrance/argocd-promotion-example
 # cd into the cloned directory
-git checkout 1fb992d897d1aed51a2f2bf60018d42f85cbaf6c
-helm template . --name-template hello-rest-test --set replicas=3 --include-crds
+git checkout 485f37332b4d445ffa5cd104636f0d871d1b2f18
+helm template . --name-template hello-rest-test --set replicas=2 --include-crds
 ```
