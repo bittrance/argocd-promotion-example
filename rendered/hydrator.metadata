@@ -1,7 +1,7 @@
 {
   "repoURL": "https://github.com/bittrance/argocd-promotion-example",
-  "drySha": "24b9f8df6f444e6efb2df42e863b631b454ed035",
+  "drySha": "8ce211ea692ba0f7573e487e48e43f096f9f126c",
   "commands": [
-    "helm template . --name-template hello-rest-test --set replicas=3 --include-crds"
+    "helm template . --name-template hello-rest-test --include-crds"
   ]
 }
